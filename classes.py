@@ -99,3 +99,70 @@ class Biblioteca:
 
         print("ID não encontrado.") # Avisa que o ID digitado não existe na biblioteca
         return False # Retorna "False" para indicar que a remoção não aconteceu
+
+    def total_musicas(self):
+
+        contador = 0 # Variável que guardará a quantidade de músicas
+
+        atual = self.primeiro # Começa pelo primeiro nó da lista
+
+        while atual is not None: # Enquanto ainda houver nós na lista,...
+            contador += 1 # ... soma + 1 para cada música encontrada
+            atual = atual.proximo # Vai para o próximo nó da lista
+
+        return contador # Retorna a quantidade total de músicas
+
+####### FILA (FIFO)
+
+class Fila:
+    def __init__(self):
+        self.inicio = None # Primeiro nó da fila
+        self.fim = None # Último nó da fila
+        self.quantidade = 0 # Quantidade de músicas na fila
+
+    def vazia(self):
+        return self.inicio is None # Retorna True se a fila ESTIVER VAZIA 
+
+    def enqueue(self, musica): # •en = entrar | •queue = fila
+
+        novo = NoFila(musica) # Cria um novo nó da fila com a música
+
+        if self.vazia(): # Se a fila ESTIVER VAZIA...
+            self.inicio = novo # ... o novo nó vira o primeiro...
+            self.fim = novo # ... e também o último
+        else:
+            self.fim.proximo = novo # Liga •o último nó •ao novo nó
+            self.fim = novo # O novo nó vira o último da fila
+
+        self.quantidade += 1 # Soma + 1 na quantidade de músicas
+
+    def dequeue(self): # •de = sair | •queue = fila
+
+        if self.vazia(): # Se a fila ESTIVER VAZIA...
+            return None # ... retorna None (se nao houver músicas na fila)
+
+        removido = self.inicio.musica # Guarda a música do primeiro nó - e que será removida da fila
+
+        self.inicio = self.inicio.proximo # O segundo nó vira o primeiro
+
+        if self.inicio is None: # Se a fila ficar vazia...
+            self.fim = None # ... o fim também vira None
+
+        self.quantidade -= 1 # Diminui -1 da quantidade de músicas
+
+        return removido # Retorna a música removida
+
+    def mostrar(self):
+
+        if self.vazia(): # Verifica se a fila está vazia
+            print("Fila vazia.")
+            return
+
+        atual = self.inicio # Começa pelo primeiro nó da fila
+
+        while atual is not None: # Enquanto ainda houver nós na fila...
+            print(atual.musica) # ... mostra a música atual
+            atual = atual.proximo # Vai para o próximo nó
+
+    def tamanho(self):
+        return self.quantidade # Retorna a quantidade de músicas da fila
